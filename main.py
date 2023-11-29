@@ -28,7 +28,7 @@ def check_links_status(links):
                 writer.writerow({'link': link, 'response_code': response.status_code}) #zapisanie wiersza
 
 if __name__ == "__main__":
-    url_to_check = "...."  # Tutaj podaj adres strony, którą chcesz sprawdzić
+    url_to_check = "..s.."  # Tutaj podaj adres strony, którą chcesz sprawdzić
 
     extracted_links = get_links_from_page(url_to_check)
     if extracted_links:
