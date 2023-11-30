@@ -26,12 +26,22 @@ def check_links_status(links):
                 response = requests.head(link)
                 print(f"Link: {link}, Status kod: {response.status_code}") #wydrukowanie logu
                 writer.writerow({'link': link, 'response_code': response.status_code}) #zapisanie wiersza
+def read_links(path):
+    results = []
+    with open(path, newline='') as csvFile:
+        reader = csv.reader(csvFile, delimiter=' ')
+        for row in reader:
+            cell_content_without_brackets = ''.join(c for c in row if c not in '[]')
+            results.append(cell_content_without_brackets)
+    return results
+
 
 if __name__ == "__main__":
-    url_to_check = "..s.."  # Tutaj podaj adres strony, którą chcesz sprawdzić
+    urls_to_check = read_links("./links.csv")
 
-    extracted_links = get_links_from_page(url_to_check)
-    if extracted_links:
-        check_links_status(extracted_links)
-    else:
-        print("Brak linków do sprawdzenia.")
+    for url_to_check in urls_to_check:
+        extracted_links = get_links_from_page(url_to_check)
+        if extracted_links:
+            check_links_status(extracted_links)
+        else:
+            print("Brak linków do sprawdzenia.")
